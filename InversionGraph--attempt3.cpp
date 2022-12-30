@@ -73,11 +73,15 @@ void solve() {
 		cin >> p[i];
 	}
 
+	SetUnion su(parent);
+	su.makeSet(n);
+
 	int start = 1;
 	vector<int> placed;
 	for (int i = 1; i <= n; i++) {
 		for (int j = start; j < p[i]; j++) {
-			c.push_back(make_pair(p[i], j));
+			//c.push_back(make_pair(p[i], j));
+			su.mergeSets(p[i], j);
 		}
 
 		if (placed.size() == 0) {
@@ -101,12 +105,9 @@ void solve() {
 	//	cout << pr.first << " " << pr.second << endl;
 	//}
 
-	SetUnion su(parent);
-	su.makeSet(n);
-
-	for (pair<int, int> i : c) {
-		su.mergeSets(i.first, i.second);
-	}
+	//for (pair<int, int> i : c) {
+	//	su.mergeSets(i.first, i.second);
+	//}
 
 	cout << su.countParents() << endl;
 	//su.print();
