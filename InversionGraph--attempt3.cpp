@@ -6,10 +6,13 @@ using namespace std;
 class SetUnion {
 private:
 	vector<int> parent;
+	vector<int> rank;
 
 public:
 	SetUnion(vector<int> &parent) {
 		this->parent = parent;
+		int n = parent.size() + 1;
+		rank.resize(n);
 	}
 
 	void makeSet(int n) {		
@@ -33,7 +36,19 @@ public:
 		int x = find(A);
 		int y = find(B);
 
-		parent[x] = y;
+		int xRank = rank[x];
+		int yRank = rank[y];
+
+		if (xRank == yRank) {
+			parent[x] = y;
+			rank[y]++;
+		}
+		else if (xRank < yRank) {
+			parent[x] = y;
+		}
+		else {
+			parent[y] = x;
+		}
 	}
 
 	int countParents() {
